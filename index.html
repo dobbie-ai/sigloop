@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+    body {
+        margin: 0;
+        background: transparent;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    .wrap {
+        width: 320px;         
+        height: 350px;        
+        position: relative;
+        overflow: hidden;
+    }
+
+    .fade {
+        position: absolute;
+        left: 0; right: 0;
+        height: 40px;
+        pointer-events: none;
+        z-index: 10;
+    }
+    .fade.top {
+        top: 0;
+        background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0));
+    }
+    .fade.bottom {
+        bottom: 0;
+        background: linear-gradient(to top, rgba(255,255,255,0), rgba(255,255,255,0));
+    }
+
+    .scroll-box {
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+
+    .item {
+        height: 35px;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        font-size: 20px;
+        gap: 6px;
+        justify-content: flex-start;
+        padding-left: 10px;
+    }
+
+    .num {
+        color: red;
+        font-weight: bold;
+    }
+    .txt {
+        color: black;
+    }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+    <div class="fade top"></div>
+    <div class="fade bottom"></div>
+
+    <div class="scroll-box" id="listBox"></div>
+</div>
+
+<script>
+const data = [
+"66 귀여워서미안","99 바람피면 D지는거야","100 이라이라","101 한화이글스","105 외모체크",
+"112 바빠","119 진압해","120 두산베어스","121 KT위즈","122 해비머신건",
+"123 사쿠란보","125 왠지","127 솜사탕","134 포켓몬","136 삐끼삐끼",
+"139 부리부리","140 체온","144 카카리나닮았대","149 빙빙","150 묵찌빠",
+"155 언터쳐블","159 제로투","160 우유","162 찔려","164 날라리",
+"167 핫이슈","168 쌔끈빠끈","170 Hold up","172 CHANEL","175 무아",
+"177 빛을따라서","179 라라리라라","180 러브쉐이크","182 예쁜게죄","185 팬싸비스",
+"186 고민중독","189 나랑사귈래","190 푱푱","191 바니바니","195 굿굿바이",
+"196 런웨이","199 이머전시","200 레디올낫","201 버블","202 연애의조건",
+"204 왜요왜요","210 퀵드베","214 뻐큐뱅어","220 슬램덩크","222 버터플라이",
+"233 핑크레이디","240 핫해","242 런웨이","248 퀸카","262 우치다",
+"266 스마트","268 도어","272 EASY","277 앙카존","278 마그네틱",
+"280 인더클럽","282 드라마","290 너와의모든지금","291 오늘부터우리는","296 나를바라봐",
+"300 여우","303 보름달","305 마티니","308 계엄령","309 하입보이",
+"310 테디베어","311 디바","315 예뻐예뻐","318 간바레센빠이","320 위아래",
+"323 나이스바디","333 엘에스디","344 누나가 알려줄게","347 아마겟돈","352 위플래쉬",
+"357 매니악","358 일레븐","360 뻐킹뱅어","364 아헤가오","377 터미널",
+"379 킥드베","388 덜덜덜","391 코카인","392 리치맨","397 피버",
+"400 페스트카 앤 슈퍼스타","411 와썹","411 ","414 몸","415 살아있네",
+"420 엉큰녀","430 오빠달려붕붕","433 칭칭언니 귀여워","444 오빠하앙","450 오빠나해도돼",
+"452 이꾸욧","458 몸매","470 엉큰녀","488 이디엠","489 바우치",
+"496 호미들","500 모또모또","510 초대","512 헨타이","555 사랑이 간식",
+"556 몸매자랑","566 슈퍼킥드베","577 슈퍼오빠달려붕붕","1000 춤완곡","1818 킹받쥬",
+"12486 많이사랑해예빈","20486 이만큼사랑해","30028 삼만예빈"
+];
+
+const listBox = document.getElementById("listBox");
+const itemHeight = 35;
+const showCount = 10;
+
+function buildList() {
+    let html = "";
+    const loopList = [...data, ...data, ...data];
+    loopList.forEach(v => {
+        let [num, ...txt] = v.split(" ");
+        txt = txt.join(" ");
+        html += `
+        <div class="item">
+            <span class="num"><b>${num}</b></span>
+            <span class="txt">${txt}</span>
+        </div>`;
+    });
+    listBox.innerHTML = html;
+}
+
+let pos = 0;
+function tick() {
+    pos++;
+    listBox.style.transform = `translateY(-${pos * itemHeight}px)`;
+    if (pos >= data.length) pos = 0;
+}
+
+buildList();
+setInterval(tick, 1500);
+</script>
+
+</body>
+</html>
