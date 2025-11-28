@@ -58,12 +58,38 @@
     }
 
     .num {
-        color: red;
-        font-weight: bold;
+        position: relative;
+        display: inline-block;
+        color: #ff0000;
     }
+
     .txt {
-        color: black;
+        position: relative;
+        display: inline-block;
     }
+
+    /* 숫자 before → 파란 윤곽선 */
+    .num::before {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        color: transparent;
+        -webkit-text-stroke: 5px white;
+    }
+
+    /* 텍스트 before → 빨간 윤곽선 */
+    .txt::before {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        color: transparent;
+        -webkit-text-stroke: 5px white;
+    }
+
 </style>
 </head>
 <body>
@@ -116,8 +142,8 @@ function buildList() {
         txt = txt.join(" ");
         html += `
         <div class="item">
-            <span class="num"><b>${num}</b></span>
-            <span class="txt">${txt}</span>
+            <span class="num" data-text="${num}"><b>${num}</b></span>
+            <span class="txt" data-text="${txt}">${txt}</span>
         </div>`;
     });
     listBox.innerHTML = html;
